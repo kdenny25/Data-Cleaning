@@ -1,0 +1,33 @@
+---
+title: "Cleaning Data with R"
+output: html_notebook
+---
+
+> First the library and data need to be loaded into R Note: This walkthrough is from
+https://towardsdatascience.com/data-cleaning-with-r-and-the-tidyverse-detecting-missing-values-ea23c519bc62 
+
+```{r}
+library(tidyverse)
+
+#set the working directory
+file_loc <- paste(getwd(), "/raw_data", sep="")
+setwd(file_loc)
+
+# read csv file
+df <- read_csv("telecom.csv")
+```
+
+> The "glimpse" function shows the variable names and types.
+
+```{r}
+glimpse(df)
+```
+
+> The "dplyr" library is used for data manipulation. The first example will demonstrate the use of filter to show all customers who have Churn values equal to "yes".
+
+```{r}
+df %>%
+  filter(Churn == "yes")
+```
+
+
