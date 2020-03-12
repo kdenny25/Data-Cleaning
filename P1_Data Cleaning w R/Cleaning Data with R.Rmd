@@ -132,4 +132,91 @@ df
 
 > Now it's time to tackle some non-standard missing values
 
+> To start, take a look at the TotalCharges column
+
+```{r}
+# look at the TOtalCharges column
+df %>%
+  select(TotalCharges)
+```
+
+> At a glance there are various forms of the NA value. The next step is to see if R can properly interpret these values as NA using the is.na function.
+
+```{r}
+# looking at missing values
+df$TotalCharges
+is.na(df$TotalCharges)
+```
+
+> Ok, so looking at the results there are three na values and one TRUE value. I looks lke the only value of NA that R recognizes is NA.
+
+> Next, we summarise the data to see how many missing values R found.
+
+```{r}
+# counting missing values
+df %>%
+  summarise(count = sum(is.na(TotalCharges)))
+```
+
+> As expected from the previous test. R recognises only one missing value.
+
+> The next step is to use the mutate function to change the other missing values to the correct format.
+
+```{r}
+# replacig with standard missing value type, NA
+df <- df %>%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == "na", NA)) %>%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == "N/A", NA))
+```
+
+> Check the colum again to varify the changes took place.
+
+```{r}
+# take another look
+df$TotalCharges
+is.na(df$TotalCharges)
+```
+
+> Great! The changes were made successfully. There is still an issue with this column. R is interpreting the values as characters rather than a numerical value. To verify use the glimpse function.
+
+```{r}
+# verify column type
+glimpse(df$TotalCharges)
+```
+
+> Confirmed. The values are all being treated as characters. Lets change them to numeric types.
+
+```{r}
+# changing to numeric type
+df$TotalCharges <- as.numeric(df$TotalCharges)
+glimpse(df$TotalCharges)
+```
+
+> Done! Just like the previous column, replace all the missing values with the median value.
+
+```{r}
+# replace missing values with median
+df <- df %>%
+  mutate(TotalCharges = replace(TotalCharges,
+                                is.na(TotalCharges),
+                                median(TotalCharges, na.rm = TRUE)))
+df$TotalCharges
+```
+
+> A shorter method to changing the NA values is to start by changing the column to a numeric type. This will automatically make the NA values uniform. However this isn't always the best method given other anomalies in the data.
+
+> More Missing Values
+
+> This time we will look into the PaymentMethod column
+
+```{r}
+# show PaymentMethod column
+df %>%
+  select(PaymentMethod)
+```
+
+
+
+
+
 

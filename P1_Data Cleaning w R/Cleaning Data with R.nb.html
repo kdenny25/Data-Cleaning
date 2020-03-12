@@ -2027,9 +2027,182 @@ df &lt;- df %&gt;%
 <blockquote>
 <p>Now it’s time to tackle some non-standard missing values</p>
 </blockquote>
+<blockquote>
+<p>To start, take a look at the TotalCharges column</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgJT4lXG4gIHNlbGVjdChUb3RhbENoYXJnZXMpXG5gYGAifQ== -->
+<pre class="r"><code>df %&gt;%
+  select(TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoxLCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJsMVF5MDdETUJEY1BLdEV2Q1MrbzhaT1lraU9xRDBqaERqMGF0TFFSZ1NuU2x6QmthL20yTEpPN1FvNWt1T2QyWjMxN0w0c1YzbTZTZ0VnZ0NER0UyRUk4ZUtaWlR3RENIMUVIb1NRNlBzYnEyNG5BdUFHVDJvU0VhTVZxUXp3cFRCUnpHaEpHRGRveHNxQ2tnZU9ZWExFejJyTGpCSitWbFJGUlFxRGdxZTdSeXZPYVhGUDZMa3U1d1dwdU9NdnFqc3hqc2FiSmRPMVVJSzhEK0t6Y2NxVG9mOGlFbmt0dWRUT2YvQ0h6bjdkdnJib2Y5K0wxMTZKYnJFVncyYktIUnpSck4rcHRwZVk4dlhLSWtmdURRNXh2WmY2bWZXODN1N2x4NXhONnoydEdvdy96M0EyOWs1UGhrZlRLckxiYWVTbWxZMTEzNG0zcGpQZ0NtZWVwaUc3b1pYSzdnalprU2c5a0dYcXZyUE1OQnNjL2dBS2hXOE5LZ0lBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["TotalCharges"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"109.9"},{"1":"na"},{"1":"108.15"},{"1":"1840.75"},{"1":"NA"},{"1":"820.5"},{"1":"1949.4"},{"1":"N/A"},{"1":"3046.05"},{"1":"354.95"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>At a glance there are various forms of the NA value. The next step is to see if R can properly interpret these values as NA using the is.na function.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb29raW5nIGF0IG1pc3NpbmcgdmFsdWVzXG5kZiRUb3RhbENoYXJnZXNcbmBgYCJ9 -->
+<pre class="r"><code># looking at missing values
+df$TotalCharges</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIjEwOS45XCIgICBcIm5hXCIgICAgICBcIjEwOC4xNVwiICBcIjE4NDAuNzVcIiBOQSAgICAgICBcbiBbNl0gXCI4MjAuNVwiICAgXCIxOTQ5LjRcIiAgXCJOL0FcIiAgICAgXCIzMDQ2LjA1XCIgXCIzNTQuOTVcIiBcbiJ9 -->
+<pre><code> [1] &quot;109.9&quot;   &quot;na&quot;      &quot;108.15&quot;  &quot;1840.75&quot; NA       
+ [6] &quot;820.5&quot;   &quot;1949.4&quot;  &quot;N/A&quot;     &quot;3046.05&quot; &quot;354.95&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaXMubmEoZGYkVG90YWxDaGFyZ2VzKVxuYGBgIn0= -->
+<pre class="r"><code>is.na(df$TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRVxuWzEwXSBGQUxTRVxuIn0= -->
+<pre><code> [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[10] FALSE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Ok, so looking at the results there are three na values and one TRUE value. I looks lke the only value of NA that R recognizes is NA.</p>
+</blockquote>
+<blockquote>
+<p>Next, we summarise the data to see how many missing values R found.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudGluZyBtaXNzaW5nIHZhbHVlc1xuZGYgJT4lXG4gIHN1bW1hcmlzZShjb3VudCA9IHN1bShpcy5uYShUb3RhbENoYXJnZXMpKSlcbmBgYCJ9 -->
+<pre class="r"><code># counting missing values
+df %&gt;%
+  summarise(count = sum(is.na(TotalCharges)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJsMlE3UXFDTUJTR2p4OHpIUFFCWFlkQ1NsZFFGeEQ5OHUrYXF5VGJSQ2Yxc3l2WHptUkNiYkNkYzE0ZTN1M2QrVmprdEtBQUVFQVE0U2JZUW5RNDdiSjlCaEQ2T0hrUVFtenFHNm50SkFBc2JmVWNpRWoyRkIwMm0xK1JxMTVxbCtRMTYxeVNsa3l6OU5xaWlZUEhyWHFsczdtNTNmL2dNZUxDTWpqd1FqVzZVaEpSM3p5WU9MZDRyU09zZTJtc3k0VGZlL2xJY3ZNU0d4RCt3N3JCL2RGYUVXc1ZDWG1ycEpoRDF1d2lhanVzTU1LVUlHM2FDdi9EUmthMVM3WFNiT1lvVi9Xc1RObGcrQUlUZG5wTnFBRUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["count"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>As expected from the previous test. R recognises only one missing value.</p>
+</blockquote>
+<blockquote>
+<p>The next step is to use the mutate function to change the other missing values to the correct format.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZXBsYWNpZyB3aXRoIHN0YW5kYXJkIG1pc3NpbmcgdmFsdWUgdHlwZSwgTkFcbmRmIDwtIGRmICU+JVxuICBtdXRhdGUoVG90YWxDaGFyZ2VzID0gcmVwbGFjZShUb3RhbENoYXJnZXMsIFRvdGFsQ2hhcmdlcyA9PSBcIm5hXCIsIE5BKSkgJT4lXG4gIG11dGF0ZShUb3RhbENoYXJnZXMgPSByZXBsYWNlKFRvdGFsQ2hhcmdlcywgVG90YWxDaGFyZ2VzID09IFwiTi9BXCIsIE5BKSlcbmBgYCJ9 -->
+<pre class="r"><code># replacig with standard missing value type, NA
+df &lt;- df %&gt;%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == &quot;na&quot;, NA)) %&gt;%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == &quot;N/A&quot;, NA))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Check the colum again to varify the changes took place.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0YWtlIGFub3RoZXIgbG9va1xuZGYkVG90YWxDaGFyZ2VzXG5gYGAifQ== -->
+<pre class="r"><code># take another look
+df$TotalCharges</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIjEwOS45XCIgICBOQSAgICAgICAgXCIxMDguMTVcIiAgXCIxODQwLjc1XCIgTkEgICAgICAgXG4gWzZdIFwiODIwLjVcIiAgIFwiMTk0OS40XCIgIE5BICAgICAgICBcIjMwNDYuMDVcIiBcIjM1NC45NVwiIFxuIn0= -->
+<pre><code> [1] &quot;109.9&quot;   NA        &quot;108.15&quot;  &quot;1840.75&quot; NA       
+ [6] &quot;820.5&quot;   &quot;1949.4&quot;  NA        &quot;3046.05&quot; &quot;354.95&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaXMubmEoZGYkVG90YWxDaGFyZ2VzKVxuYGBgIn0= -->
+<pre class="r"><code>is.na(df$TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRVxuWzEwXSBGQUxTRVxuIn0= -->
+<pre><code> [1] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
+[10] FALSE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Great! The changes were made successfully. There is still an issue with this column. R is interpreting the values as characters rather than a numerical value. To verify use the glimpse function.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB2ZXJpZnkgY29sdW1uIHR5cGVcbmdsaW1wc2UoZGYkVG90YWxDaGFyZ2VzKVxuYGBgIn0= -->
+<pre class="r"><code># verify column type
+glimpse(df$TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIGNociBbMToxMF0gXCIxMDkuOVwiIE5BIFwiMTA4LjE1XCIgXCIxODQwLjc1XCIgTkEgXCI4MjAuNVwiIC4uLlxuIn0= -->
+<pre><code> chr [1:10] &quot;109.9&quot; NA &quot;108.15&quot; &quot;1840.75&quot; NA &quot;820.5&quot; ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Confirmed. The values are all being treated as characters. Lets change them to numeric types.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjaGFuZ2luZyB0byBudW1lcmljIHR5cGVcbmRmJFRvdGFsQ2hhcmdlcyA8LSBhcy5udW1lcmljKGRmJFRvdGFsQ2hhcmdlcylcbmdsaW1wc2UoZGYkVG90YWxDaGFyZ2VzKVxuYGBgIn0= -->
+<pre class="r"><code># changing to numeric type
+df$TotalCharges &lt;- as.numeric(df$TotalCharges)
+glimpse(df$TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIG51bSBbMToxMF0gMTEwIE5BIDEwOCAxODQxIE5BIC4uLlxuIn0= -->
+<pre><code> num [1:10] 110 NA 108 1841 NA ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Done! Just like the previous column, replace all the missing values with the median value.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZXBsYWNlIG1pc3NpbmcgdmFsdWVzIHdpdGggbWVkaWFuXG5kZiA8LSBkZiAlPiVcbiAgbXV0YXRlKFRvdGFsQ2hhcmdlcyA9IHJlcGxhY2UoVG90YWxDaGFyZ2VzLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShUb3RhbENoYXJnZXMpLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4oVG90YWxDaGFyZ2VzLCBuYS5ybSA9IFRSVUUpKSlcbmRmJFRvdGFsQ2hhcmdlc1xuYGBgIn0= -->
+<pre class="r"><code># replace missing values with median
+df &lt;- df %&gt;%
+  mutate(TotalCharges = replace(TotalCharges,
+                                is.na(TotalCharges),
+                                median(TotalCharges, na.rm = TRUE)))
+df$TotalCharges</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMTA5LjkwICA4MjAuNTAgIDEwOC4xNSAxODQwLjc1ICA4MjAuNTAgIDgyMC41MFxuIFs3XSAxOTQ5LjQwICA4MjAuNTAgMzA0Ni4wNSAgMzU0Ljk1XG4ifQ== -->
+<pre><code> [1]  109.90  820.50  108.15 1840.75  820.50  820.50
+ [7] 1949.40  820.50 3046.05  354.95</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>A shorter method to changing the NA values is to start by changing the column to a numeric type. This will automatically make the NA values uniform. However this isn’t always the best method given other anomalies in the data.</p>
+</blockquote>
+<blockquote>
+<p>More Missing Values</p>
+</blockquote>
+<blockquote>
+<p>This time we will look into the PaymentMethod column</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzaG93IFBheW1lbnRNZXRob2QgY29sdW1uXG5kZiAlPiVcbiAgc2VsZWN0KFBheW1lbnRNZXRob2QpXG5gYGAifQ== -->
+<pre class="r"><code># show PaymentMethod column
+df %&gt;%
+  select(PaymentMethod)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoxLCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvV1JRVzZETUJCRkJ3SkUwTkpHNmdXNEFFaEoxUXMwN1RKUzFGVzJybkdDaFdOSHhsSGJYVS9kWmRJeHNaV0dMb0prbUhuTUg4KzMzMTVXajlrcUE0QVJqQkpjTVlhUXpKZlQyZE1NSUFveEN5Q0MxSDQvc2VxaEJ3QVRYSm43TVhrVmpCcXRKS2NGYlJodEhiOWRFQzVZZmNIQ3NuUlIva3hrV3hoTlpMZG0ra3Fycyt4bXJsbk5UVUdKcmpGTmovaGNFZi9ubDhaaUtralhPVk1lWmpVeHBGcHJzbVdEOGxTcmowb2l0NUxjRHZlTkx4empaOWpYRi8zdG15L0oxNVpKczJDbVVkYkJZYUFhcTUzaFNxSXV0SWNkRC9TQkhvRDd2YlQ3MUNWdDlySXRwLzNGbkM0SjNJQ0JZejRPVGx0R1I5Y3FkcTBTSmpkY01qKytJTzlNdU9RT1RmZDJxcDNtMHZoRFF0cFZSaG5pNnpLcWhDZTlOemo4QXJ6Q0V2OWtBZ0FBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["PaymentMethod"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Electronic check"},{"1":"Mailed check"},{"1":"--"},{"1":"Bank transfer"},{"1":"Electronic check"},{"1":"--"},{"1":"Credit card"},{"1":"NA"},{"1":"Electronic check"},{"1":"Electronic check"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsZWFuaW5nIERhdGEgd2l0aCBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KPiBGaXJzdCB0aGUgbGlicmFyeSBhbmQgZGF0YSBuZWVkIHRvIGJlIGxvYWRlZCBpbnRvIFIgTm90ZTogVGhpcyB3YWxrdGhyb3VnaCBpcyBmcm9tDQpodHRwczovL3Rvd2FyZHNkYXRhc2NpZW5jZS5jb20vZGF0YS1jbGVhbmluZy13aXRoLXItYW5kLXRoZS10aWR5dmVyc2UtZGV0ZWN0aW5nLW1pc3NpbmctdmFsdWVzLWVhMjNjNTE5YmM2MiANCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI3NldCB0aGUgd29ya2luZyBkaXJlY3RvcnkNCmZpbGVfbG9jIDwtIHBhc3RlKGdldHdkKCksICIvcmF3X2RhdGEiLCBzZXA9IiIpDQpzZXR3ZChmaWxlX2xvYykNCg0KIyByZWFkIGNzdiBmaWxlDQpkZiA8LSByZWFkX2NzdigidGVsZWNvbS5jc3YiKQ0KYGBgDQoNCj4gVGhlICJnbGltcHNlIiBmdW5jdGlvbiBzaG93cyB0aGUgdmFyaWFibGUgbmFtZXMgYW5kIHR5cGVzLg0KDQpgYGB7cn0NCmdsaW1wc2UoZGYpDQpgYGANCg0KPiBUaGUgImRwbHlyIiBsaWJyYXJ5IGlzIHVzZWQgZm9yIGRhdGEgbWFuaXB1bGF0aW9uLiBUaGUgZmlyc3QgZXhhbXBsZSB3aWxsIGRlbW9uc3RyYXRlIHRoZSB1c2Ugb2YgZmlsdGVyIHRvIHNob3cgYWxsIGN1c3RvbWVycyB3aG8gaGF2ZSBDaHVybiB2YWx1ZXMgZXF1YWwgdG8gInllcyIuDQoNCmBgYHtyfQ0KZGYgJT4lDQogIGZpbHRlcihDaHVybiA9PSAieWVzIikNCmBgYA0KDQo+IEZpbHRlciBhbmQgc2VsZWN0IGNhbiBiZSB1c2VkIHRvZ2V0aGVyIHRvIGZpbHRlciBvdXQgdGhvc2Ugd2hvIGhhdmUgY2h1cm5lZCBhbmQgb25seSBzZWxlY3QgdGhlIGN1c3RvbWVySUQgYW5kIHRoZSBUb3RhbENoYXJnZXMuIFRoaXMgaXMgYWxzbyBjb21wbGV0ZWQgYnkgcGlwaW5nIHRoZSBjb21tYW5kcyBhbmQgdGhlIGRwbHlyIHBhY2thZ2UuDQoNCmBgYHtyfQ0KIyBmaWx0ZXIgb24gY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCwNCiMgc2VsZWN0IGN1c3RvbWVySUQgYW5kIFRvdGFsQ2hhcmdlcyBjb2x1bW5zDQpkZiAlPiUNCiAgZmlsdGVyKENodXJuPT0ieWVzIikgJT4lDQogIHNlbGVjdChjdXN0b21lcklELCBUb3RhbENoYXJnZXMpDQpgYGANCg0KPiBOb3cgdGhlIG1pc3NpbmcgdmFsdWVzIGNhbiBiZSB0YWNrbGVkLiBJJ2xsIGxvb2sgYXQgdGhlIG1vbnRobHkgY2hhcmdlcyBjb2x1bW4gYnkgdXNpbmcgdGhlIHNhbWUgc2VsZWN0IG1ldGhvZC4NCg0KYGBge3J9DQojIHNlbGVjdCBNb250aGx5Q2hhcmdlcyBDb2x1bW4NCmRmICU+JQ0KICBzZWxlY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBUaGVyZSBhcmUgdGhyZWUgbWlzc2luZyB2YWx1ZXMuIE9uZSBvZiB0aGVtIGlzIE5hTiBhbmQgdGhlIG90aGVycyBhIGJsYW5rLiBVc2luZyBpcy5uYSwgbGV0cyBmaW5kIG91dGggb3cgUiByZWNvZ25pemVzIHRoZXNlIHZhbHVlcy4NCg0KYGBge3J9DQojIGxvb2tpbmcgYXQgTW9udGhseUNoYXJnZXMNCmRmJE1vbnRobHlDaGFyZ2VzDQppcy5uYShkZiRNb250aGx5Q2hhcmdlcykNCmBgYA0KDQo+IEp1ZGdpbmcgYnkgdGhlIHJlc3VsdHMgYWxsIG1pc3NpbmcgdmFsdWVzIGFyZSByZWNvZ25pemVkIGFzIG1pc3NpbmcgdmFsdWVzDQoNCj4gVXNpbmcgZGlzdGluY3QsIHdlIGNhbiBzZWUgaG93IG1hbnkgYW5kIHdoaWNoIGRpc3RpbmN0IHZhbHVlcyB0aGVyZSBhcmUgaW4gdGhlIGNvbHVtbg0KDQpgYGB7cn0NCiMgbG9va2luZyBhdCB0aGUgZGlzdGluY3QgdmFsdWVzDQpkZiAlPiUNCiAgZGlzdGluY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBOQSBvbmx5IHNob3dzIHVwIG9uY2UgYmVjYXVzZSB0aGVyZSBhcmUgdHdvIHZhbHVlcyBhbmQgd2Ugd2FudGVkIGFsbCB1bmlxdWUgdmFsdWVzDQoNCj4gVG8gZ2V0IGEgY291bnQgd2UgY2FuIHVzZSBzdW1tYXJpc2UuDQoNCmBgYHtyfQ0KIyBjb3VudGluZyB1bmlxdWUgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKG4gPSBuX2Rpc3RpbmN0KE1vbnRobHlDaGFyZ2VzKSkNCmBgYA0KDQo+IFRoaXMgcmV0dXJucyBhIHRpYmJsZSB3aXRoIGEgY29sdW1uIHRoYXQgd2UgbmFtZWQgIm4iIGZvciB0aGUgY291bnQgb2YgZGlzdGluY3QgdmFsdWVzDQoNCj4gQSBzaW1pbGFyIGZ1bmN0aW9uIG1heSBiZSB1c2VkIHRvIGNvdW50IHRoZSB0b3RhbCBudW1iZXIgb2YgTkEgdmFsdWVzIHVzaW5nIHN1bW1hcmlzZSBhbmQgaXMubmENCg0KYGBge3J9DQojIGNvdW50aW5nIG1pc3NpbmcgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKGNvdW50ID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSkpDQpgYGANCg0KPiBCb3RoIG9mIHRoZSBwcmV2aW91cyBhY3Rpb25zIGNhbiBiZSBncm91cGVkIHVwIGludG8gb25lIGZ1bmN0aW9uIGFuZCB3ZSBjYW4gYWxzbyBjYWxjdWxhdGUgdGhlIG1lZGlhbiBjaGFyZ2VzLCBhcyB3ZWxsLg0KDQpgYGB7cn0NCiMgY291bnRpbmcgdW5pcXVlLCBtaXNzaW5nLCBhbmQgbWVkaWFuIHZhbHVlcw0KZGYgJT4lIHN1bW1hcmlzZShuID0gbl9kaXN0aW5jdChNb250aGx5Q2hhcmdlcyksDQogICAgICAgICAgICAgICAgIG5hID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSksDQogICAgICAgICAgICAgICAgIG1lZCA9IG1lZGlhbihNb250aGx5Q2hhcmdlcywgbmEucm0gPSBUUlVFKSkNCmBgYA0KDQo+IE5vdyB0aGF0IHRoZSBtaXNzaW5nIHZhbHVlcyBoYXZlIGJlZW4gaWRlbnRpZmllZCB0aGV5IGNhbiBiZSByZXBsYWNlZCB3aXRoIHRoZSBtZWRpYW4gdmFsdWUgb2YgTW9udGhseUNoYXJnZXMgYnkgdXNpbmcgdGhlIG11dGF0ZSBmdW5jdGlvbi4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcw0KZGYgJT4lDQogIG11dGF0ZShNb250aGx5Q2hhcmdlcw0KICAgICAgICAgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtID0gVFJVRSkpKQ0KYGBgDQoNCj4gRG91YmxlIGNoZWNrIHRoYXQgdGhpcyB3YXMgYXBwbGllZCB0byB0aGUgZW50aXJlIHRpYmJsZS4NCg0KYGBge3J9DQpkZg0KYGBgDQoNCj4gSXQgZGlkbid0IGNoYW5nZS4gVGhhdCdzIGJlY2F1c2UgdGhlIG11dGF0aW9uIHdhcyBub3QgYXNzaWduZWQgdG8gdGhlIG9yaWdpbmFsIGRhdGFmcmFtZS4gVGhlIGJlbG93IGNvZGUgd2lsbCBmaXggdGhpcy4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcyBhbmQgbW9kaWZ5IHRoZSBvcmlnaW5hbCBkYXRhZnJhbWUNCmRmIDwtIGRmICU+JQ0KICBtdXRhdGUoTW9udGhseUNoYXJnZXMgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtPVRSVUUpKSkNCmBgYA0KDQo+IE5vdyBkb3VibGUgY2hlY2sgYWdhaW4gdG8gbWFrZSBzdXJlIHRoaXMgcHJvY2VzcyB3b3JrZWQuDQoNCmBgYHtyfQ0KZGYNCmBgYA0KDQo+IEl0IHdvcmtlZCENCg0KPiBOb3cgaXQncyB0aW1lIHRvIHRhY2tsZSBzb21lIG5vbi1zdGFuZGFyZCBtaXNzaW5nIHZhbHVlcw0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsZWFuaW5nIERhdGEgd2l0aCBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KPiBGaXJzdCB0aGUgbGlicmFyeSBhbmQgZGF0YSBuZWVkIHRvIGJlIGxvYWRlZCBpbnRvIFIgTm90ZTogVGhpcyB3YWxrdGhyb3VnaCBpcyBmcm9tDQpodHRwczovL3Rvd2FyZHNkYXRhc2NpZW5jZS5jb20vZGF0YS1jbGVhbmluZy13aXRoLXItYW5kLXRoZS10aWR5dmVyc2UtZGV0ZWN0aW5nLW1pc3NpbmctdmFsdWVzLWVhMjNjNTE5YmM2MiANCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI3NldCB0aGUgd29ya2luZyBkaXJlY3RvcnkNCmZpbGVfbG9jIDwtIHBhc3RlKGdldHdkKCksICIvcmF3X2RhdGEiLCBzZXA9IiIpDQpzZXR3ZChmaWxlX2xvYykNCg0KIyByZWFkIGNzdiBmaWxlDQpkZiA8LSByZWFkX2NzdigidGVsZWNvbS5jc3YiKQ0KYGBgDQoNCj4gVGhlICJnbGltcHNlIiBmdW5jdGlvbiBzaG93cyB0aGUgdmFyaWFibGUgbmFtZXMgYW5kIHR5cGVzLg0KDQpgYGB7cn0NCmdsaW1wc2UoZGYpDQpgYGANCg0KPiBUaGUgImRwbHlyIiBsaWJyYXJ5IGlzIHVzZWQgZm9yIGRhdGEgbWFuaXB1bGF0aW9uLiBUaGUgZmlyc3QgZXhhbXBsZSB3aWxsIGRlbW9uc3RyYXRlIHRoZSB1c2Ugb2YgZmlsdGVyIHRvIHNob3cgYWxsIGN1c3RvbWVycyB3aG8gaGF2ZSBDaHVybiB2YWx1ZXMgZXF1YWwgdG8gInllcyIuDQoNCmBgYHtyfQ0KZGYgJT4lDQogIGZpbHRlcihDaHVybiA9PSAieWVzIikNCmBgYA0KDQo+IEZpbHRlciBhbmQgc2VsZWN0IGNhbiBiZSB1c2VkIHRvZ2V0aGVyIHRvIGZpbHRlciBvdXQgdGhvc2Ugd2hvIGhhdmUgY2h1cm5lZCBhbmQgb25seSBzZWxlY3QgdGhlIGN1c3RvbWVySUQgYW5kIHRoZSBUb3RhbENoYXJnZXMuIFRoaXMgaXMgYWxzbyBjb21wbGV0ZWQgYnkgcGlwaW5nIHRoZSBjb21tYW5kcyBhbmQgdGhlIGRwbHlyIHBhY2thZ2UuDQoNCmBgYHtyfQ0KIyBmaWx0ZXIgb24gY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCwNCiMgc2VsZWN0IGN1c3RvbWVySUQgYW5kIFRvdGFsQ2hhcmdlcyBjb2x1bW5zDQpkZiAlPiUNCiAgZmlsdGVyKENodXJuPT0ieWVzIikgJT4lDQogIHNlbGVjdChjdXN0b21lcklELCBUb3RhbENoYXJnZXMpDQpgYGANCg0KPiBOb3cgdGhlIG1pc3NpbmcgdmFsdWVzIGNhbiBiZSB0YWNrbGVkLiBJJ2xsIGxvb2sgYXQgdGhlIG1vbnRobHkgY2hhcmdlcyBjb2x1bW4gYnkgdXNpbmcgdGhlIHNhbWUgc2VsZWN0IG1ldGhvZC4NCg0KYGBge3J9DQojIHNlbGVjdCBNb250aGx5Q2hhcmdlcyBDb2x1bW4NCmRmICU+JQ0KICBzZWxlY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBUaGVyZSBhcmUgdGhyZWUgbWlzc2luZyB2YWx1ZXMuIE9uZSBvZiB0aGVtIGlzIE5hTiBhbmQgdGhlIG90aGVycyBhIGJsYW5rLiBVc2luZyBpcy5uYSwgbGV0cyBmaW5kIG91dGggb3cgUiByZWNvZ25pemVzIHRoZXNlIHZhbHVlcy4NCg0KYGBge3J9DQojIGxvb2tpbmcgYXQgTW9udGhseUNoYXJnZXMNCmRmJE1vbnRobHlDaGFyZ2VzDQppcy5uYShkZiRNb250aGx5Q2hhcmdlcykNCmBgYA0KDQo+IEp1ZGdpbmcgYnkgdGhlIHJlc3VsdHMgYWxsIG1pc3NpbmcgdmFsdWVzIGFyZSByZWNvZ25pemVkIGFzIG1pc3NpbmcgdmFsdWVzDQoNCj4gVXNpbmcgZGlzdGluY3QsIHdlIGNhbiBzZWUgaG93IG1hbnkgYW5kIHdoaWNoIGRpc3RpbmN0IHZhbHVlcyB0aGVyZSBhcmUgaW4gdGhlIGNvbHVtbg0KDQpgYGB7cn0NCiMgbG9va2luZyBhdCB0aGUgZGlzdGluY3QgdmFsdWVzDQpkZiAlPiUNCiAgZGlzdGluY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBOQSBvbmx5IHNob3dzIHVwIG9uY2UgYmVjYXVzZSB0aGVyZSBhcmUgdHdvIHZhbHVlcyBhbmQgd2Ugd2FudGVkIGFsbCB1bmlxdWUgdmFsdWVzDQoNCj4gVG8gZ2V0IGEgY291bnQgd2UgY2FuIHVzZSBzdW1tYXJpc2UuDQoNCmBgYHtyfQ0KIyBjb3VudGluZyB1bmlxdWUgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKG4gPSBuX2Rpc3RpbmN0KE1vbnRobHlDaGFyZ2VzKSkNCmBgYA0KDQo+IFRoaXMgcmV0dXJucyBhIHRpYmJsZSB3aXRoIGEgY29sdW1uIHRoYXQgd2UgbmFtZWQgIm4iIGZvciB0aGUgY291bnQgb2YgZGlzdGluY3QgdmFsdWVzDQoNCj4gQSBzaW1pbGFyIGZ1bmN0aW9uIG1heSBiZSB1c2VkIHRvIGNvdW50IHRoZSB0b3RhbCBudW1iZXIgb2YgTkEgdmFsdWVzIHVzaW5nIHN1bW1hcmlzZSBhbmQgaXMubmENCg0KYGBge3J9DQojIGNvdW50aW5nIG1pc3NpbmcgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKGNvdW50ID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSkpDQpgYGANCg0KPiBCb3RoIG9mIHRoZSBwcmV2aW91cyBhY3Rpb25zIGNhbiBiZSBncm91cGVkIHVwIGludG8gb25lIGZ1bmN0aW9uIGFuZCB3ZSBjYW4gYWxzbyBjYWxjdWxhdGUgdGhlIG1lZGlhbiBjaGFyZ2VzLCBhcyB3ZWxsLg0KDQpgYGB7cn0NCiMgY291bnRpbmcgdW5pcXVlLCBtaXNzaW5nLCBhbmQgbWVkaWFuIHZhbHVlcw0KZGYgJT4lIHN1bW1hcmlzZShuID0gbl9kaXN0aW5jdChNb250aGx5Q2hhcmdlcyksDQogICAgICAgICAgICAgICAgIG5hID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSksDQogICAgICAgICAgICAgICAgIG1lZCA9IG1lZGlhbihNb250aGx5Q2hhcmdlcywgbmEucm0gPSBUUlVFKSkNCmBgYA0KDQo+IE5vdyB0aGF0IHRoZSBtaXNzaW5nIHZhbHVlcyBoYXZlIGJlZW4gaWRlbnRpZmllZCB0aGV5IGNhbiBiZSByZXBsYWNlZCB3aXRoIHRoZSBtZWRpYW4gdmFsdWUgb2YgTW9udGhseUNoYXJnZXMgYnkgdXNpbmcgdGhlIG11dGF0ZSBmdW5jdGlvbi4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcw0KZGYgJT4lDQogIG11dGF0ZShNb250aGx5Q2hhcmdlcw0KICAgICAgICAgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtID0gVFJVRSkpKQ0KYGBgDQoNCj4gRG91YmxlIGNoZWNrIHRoYXQgdGhpcyB3YXMgYXBwbGllZCB0byB0aGUgZW50aXJlIHRpYmJsZS4NCg0KYGBge3J9DQpkZg0KYGBgDQoNCj4gSXQgZGlkbid0IGNoYW5nZS4gVGhhdCdzIGJlY2F1c2UgdGhlIG11dGF0aW9uIHdhcyBub3QgYXNzaWduZWQgdG8gdGhlIG9yaWdpbmFsIGRhdGFmcmFtZS4gVGhlIGJlbG93IGNvZGUgd2lsbCBmaXggdGhpcy4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcyBhbmQgbW9kaWZ5IHRoZSBvcmlnaW5hbCBkYXRhZnJhbWUNCmRmIDwtIGRmICU+JQ0KICBtdXRhdGUoTW9udGhseUNoYXJnZXMgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtPVRSVUUpKSkNCmBgYA0KDQo+IE5vdyBkb3VibGUgY2hlY2sgYWdhaW4gdG8gbWFrZSBzdXJlIHRoaXMgcHJvY2VzcyB3b3JrZWQuDQoNCmBgYHtyfQ0KZGYNCmBgYA0KDQo+IEl0IHdvcmtlZCENCg0KPiBOb3cgaXQncyB0aW1lIHRvIHRhY2tsZSBzb21lIG5vbi1zdGFuZGFyZCBtaXNzaW5nIHZhbHVlcw0KDQo+IFRvIHN0YXJ0LCB0YWtlIGEgbG9vayBhdCB0aGUgVG90YWxDaGFyZ2VzIGNvbHVtbg0KDQpgYGB7cn0NCiMgbG9vayBhdCB0aGUgVE90YWxDaGFyZ2VzIGNvbHVtbg0KZGYgJT4lDQogIHNlbGVjdChUb3RhbENoYXJnZXMpDQpgYGANCg0KPiBBdCBhIGdsYW5jZSB0aGVyZSBhcmUgdmFyaW91cyBmb3JtcyBvZiB0aGUgTkEgdmFsdWUuIFRoZSBuZXh0IHN0ZXAgaXMgdG8gc2VlIGlmIFIgY2FuIHByb3Blcmx5IGludGVycHJldCB0aGVzZSB2YWx1ZXMgYXMgTkEgdXNpbmcgdGhlIGlzLm5hIGZ1bmN0aW9uLg0KDQpgYGB7cn0NCiMgbG9va2luZyBhdCBtaXNzaW5nIHZhbHVlcw0KZGYkVG90YWxDaGFyZ2VzDQppcy5uYShkZiRUb3RhbENoYXJnZXMpDQpgYGANCg0KPiBPaywgc28gbG9va2luZyBhdCB0aGUgcmVzdWx0cyB0aGVyZSBhcmUgdGhyZWUgbmEgdmFsdWVzIGFuZCBvbmUgVFJVRSB2YWx1ZS4gSSBsb29rcyBsa2UgdGhlIG9ubHkgdmFsdWUgb2YgTkEgdGhhdCBSIHJlY29nbml6ZXMgaXMgTkEuDQoNCj4gTmV4dCwgd2Ugc3VtbWFyaXNlIHRoZSBkYXRhIHRvIHNlZSBob3cgbWFueSBtaXNzaW5nIHZhbHVlcyBSIGZvdW5kLg0KDQpgYGB7cn0NCiMgY291bnRpbmcgbWlzc2luZyB2YWx1ZXMNCmRmICU+JQ0KICBzdW1tYXJpc2UoY291bnQgPSBzdW0oaXMubmEoVG90YWxDaGFyZ2VzKSkpDQpgYGANCg0KPiBBcyBleHBlY3RlZCBmcm9tIHRoZSBwcmV2aW91cyB0ZXN0LiBSIHJlY29nbmlzZXMgb25seSBvbmUgbWlzc2luZyB2YWx1ZS4NCg0KPiBUaGUgbmV4dCBzdGVwIGlzIHRvIHVzZSB0aGUgbXV0YXRlIGZ1bmN0aW9uIHRvIGNoYW5nZSB0aGUgb3RoZXIgbWlzc2luZyB2YWx1ZXMgdG8gdGhlIGNvcnJlY3QgZm9ybWF0Lg0KDQpgYGB7cn0NCiMgcmVwbGFjaWcgd2l0aCBzdGFuZGFyZCBtaXNzaW5nIHZhbHVlIHR5cGUsIE5BDQpkZiA8LSBkZiAlPiUNCiAgbXV0YXRlKFRvdGFsQ2hhcmdlcyA9IHJlcGxhY2UoVG90YWxDaGFyZ2VzLCBUb3RhbENoYXJnZXMgPT0gIm5hIiwgTkEpKSAlPiUNCiAgbXV0YXRlKFRvdGFsQ2hhcmdlcyA9IHJlcGxhY2UoVG90YWxDaGFyZ2VzLCBUb3RhbENoYXJnZXMgPT0gIk4vQSIsIE5BKSkNCmBgYA0KDQo+IENoZWNrIHRoZSBjb2x1bSBhZ2FpbiB0byB2YXJpZnkgdGhlIGNoYW5nZXMgdG9vayBwbGFjZS4NCg0KYGBge3J9DQojIHRha2UgYW5vdGhlciBsb29rDQpkZiRUb3RhbENoYXJnZXMNCmlzLm5hKGRmJFRvdGFsQ2hhcmdlcykNCmBgYA0KDQo+IEdyZWF0ISBUaGUgY2hhbmdlcyB3ZXJlIG1hZGUgc3VjY2Vzc2Z1bGx5LiBUaGVyZSBpcyBzdGlsbCBhbiBpc3N1ZSB3aXRoIHRoaXMgY29sdW1uLiBSIGlzIGludGVycHJldGluZyB0aGUgdmFsdWVzIGFzIGNoYXJhY3RlcnMgcmF0aGVyIHRoYW4gYSBudW1lcmljYWwgdmFsdWUuIFRvIHZlcmlmeSB1c2UgdGhlIGdsaW1wc2UgZnVuY3Rpb24uDQoNCmBgYHtyfQ0KIyB2ZXJpZnkgY29sdW1uIHR5cGUNCmdsaW1wc2UoZGYkVG90YWxDaGFyZ2VzKQ0KYGBgDQoNCj4gQ29uZmlybWVkLiBUaGUgdmFsdWVzIGFyZSBhbGwgYmVpbmcgdHJlYXRlZCBhcyBjaGFyYWN0ZXJzLiBMZXRzIGNoYW5nZSB0aGVtIHRvIG51bWVyaWMgdHlwZXMuDQoNCmBgYHtyfQ0KIyBjaGFuZ2luZyB0byBudW1lcmljIHR5cGUNCmRmJFRvdGFsQ2hhcmdlcyA8LSBhcy5udW1lcmljKGRmJFRvdGFsQ2hhcmdlcykNCmdsaW1wc2UoZGYkVG90YWxDaGFyZ2VzKQ0KYGBgDQoNCj4gRG9uZSEgSnVzdCBsaWtlIHRoZSBwcmV2aW91cyBjb2x1bW4sIHJlcGxhY2UgYWxsIHRoZSBtaXNzaW5nIHZhbHVlcyB3aXRoIHRoZSBtZWRpYW4gdmFsdWUuDQoNCmBgYHtyfQ0KIyByZXBsYWNlIG1pc3NpbmcgdmFsdWVzIHdpdGggbWVkaWFuDQpkZiA8LSBkZiAlPiUNCiAgbXV0YXRlKFRvdGFsQ2hhcmdlcyA9IHJlcGxhY2UoVG90YWxDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShUb3RhbENoYXJnZXMpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4oVG90YWxDaGFyZ2VzLCBuYS5ybSA9IFRSVUUpKSkNCmRmJFRvdGFsQ2hhcmdlcw0KYGBgDQoNCj4gQSBzaG9ydGVyIG1ldGhvZCB0byBjaGFuZ2luZyB0aGUgTkEgdmFsdWVzIGlzIHRvIHN0YXJ0IGJ5IGNoYW5naW5nIHRoZSBjb2x1bW4gdG8gYSBudW1lcmljIHR5cGUuIFRoaXMgd2lsbCBhdXRvbWF0aWNhbGx5IG1ha2UgdGhlIE5BIHZhbHVlcyB1bmlmb3JtLiBIb3dldmVyIHRoaXMgaXNuJ3QgYWx3YXlzIHRoZSBiZXN0IG1ldGhvZCBnaXZlbiBvdGhlciBhbm9tYWxpZXMgaW4gdGhlIGRhdGEuDQoNCj4gTW9yZSBNaXNzaW5nIFZhbHVlcw0KDQo+IFRoaXMgdGltZSB3ZSB3aWxsIGxvb2sgaW50byB0aGUgUGF5bWVudE1ldGhvZCBjb2x1bW4NCg0KYGBge3J9DQojIHNob3cgUGF5bWVudE1ldGhvZCBjb2x1bW4NCmRmICU+JQ0KICBzZWxlY3QoUGF5bWVudE1ldGhvZCkNCmBgYA0KDQoNCg0KDQoNCg0K</div>
 
 
 
