@@ -215,6 +215,35 @@ df %>%
   select(PaymentMethod)
 ```
 
+> Like the first two, lets check to see how R interprets these missing values
+
+```{r}
+# looking at PaymentMethod
+df$PaymentMethod
+is.na(df$PaymentMethod)
+```
+
+> Ok, so it does not recognize the -- as missing values.The next step is to mutate these.
+
+```{r}
+# replacing "--" with NA
+df <- df %>%
+  mutate(PaymentMethod = replace(PaymentMethod, PaymentMethod == "--", NA))
+is.na(df$PaymentMethod)
+df$PaymentMethod
+```
+
+> Next we will convert the NA values to "unavailable"
+
+```{r}
+# replace NA with "unavailable"
+df <- df %>%
+  mutate(PaymentMethod = replace(PaymentMethod, is.na(PaymentMethod), "unavailable"))
+
+df$PaymentMethod
+```
+
+
 
 
 
