@@ -1803,9 +1803,233 @@ $ Churn          [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;yes&quot;, &quot;yes
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<blockquote>
+<p>Filter and select can be used together to filter out those who have churned and only select the customerID and the TotalCharges. This is also completed by piping the commands and the dplyr package.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaWx0ZXIgb24gY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCxcbiMgc2VsZWN0IGN1c3RvbWVySUQgYW5kIFRvdGFsQ2hhcmdlcyBjb2x1bW5zXG5kZiAlPiVcbiAgZmlsdGVyKENodXJuPT1cInllc1wiKSAlPiVcbiAgc2VsZWN0KGN1c3RvbWVySUQsIFRvdGFsQ2hhcmdlcylcbmBgYCJ9 -->
+<pre class="r"><code># filter on customers that churned,
+# select customerID and TotalCharges columns
+df %&gt;%
+  filter(Churn==&quot;yes&quot;) %&gt;%
+  select(customerID, TotalCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoyLCJucm93Ijo1fSwicmRmIjoiSDRzSUFBQUFBQUFBQmwyUWEwL0NNQlNHeTI2R1JaU0UzOUc2U3pyWVI5MElta1hBU3doK3JHTUNjWFJrRzlHUC9tOFRaanRhbzEzUzdaem5uSjIzNzNtTWw3Njl0QUVBT3RBdGRrd1dBaXVhdXg3MkFEQTBsbldBQWJyOCs4bTZCaXpnc00rT0tRcjJFSWNPWE53dXhoTkpNQjVpT0prdTRyRWtmaENNNE1QODVTYVJKUFFkREtQNEtZa2tDWWF1RDJmSjdENVNGRXpYQ1ZFb0VvMFNFVm11TTBJdWxrMGp6MEV5MGFkWDE4cjl6VFFuVlNVbVMyaXZTRTNRVzBsMm1kTGVMWXNQUkJubnYvUzQ3aGQ3TlUzenJjNlZUZjEyTjJKdWVxanFZcGVWZDdFZzU4OUZUZkpvUThwMTIzMVV4cHdWKzNwYlVGYlNCcTMxL3hmdGxBcTRQRkF1dklMcDVrRGZvY3RGMi9McDZZblkvQk5ySjBtalVkWnJaWFM5cFpuMGs1UFhMQmZKQmR0QzZ3L3R5eTJ0cFR0R0sxUnpRNzkraTF5UzFoczQvZ0FTaXA1RFhBSUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["customerID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["TotalCharges"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"7590-VHVEG","2":"109.9"},{"1":"5575-GNVDE","2":"na"},{"1":"3668-QPYBK","2":"108.15"},{"1":"9305-CDSKC","2":"820.5"},{"1":"6713-OKOMC","2":"N/A"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Now the missing values can be tackled. I’ll look at the monthly charges column by using the same select method.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzZWxlY3QgTW9udGhseUNoYXJnZXMgQ29sdW1uXG5kZiAlPiVcbiAgc2VsZWN0KE1vbnRobHlDaGFyZ2VzKVxuYGBgIn0= -->
+<pre class="r"><code># select MonthlyCharges Column
+df %&gt;%
+  select(MonthlyCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoxLCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJndHlpVERtaXVCaVlHQmdabUJtQTJKV0lKT0J6VG5BME1qVWlJR0JoUW5JWTJSZ1llQUUwUlZBVmNKZ0FRWUdQaURtY3JDOU9STUlaam40VklMcCtnOGczZXlMSEZ6VjBrREFJWEROR1NBNFcvK0RBUXdjd3R6QTRuQjFVY1pnNE9ETkExYUhaaUZyY2s1aWNUR1FJWUFreUpXU1dKS29sMWFVbUp1S3BweXpLTDljTHc4b0R0TENDOFJNRFVEaS8vLy8zOUROaFNsQ05wZlBOeit2SkNPbjBqa2pzU2dkTFBzUFRSdDdma0ZKWm40ZVVJb0pGQXFzYUFZd0ZxRUo4SmZtZ1N4SzBVM09LTTNMMWpVRU9SNGFlZ3hRRnpKQ3hXQnNSb2lWTFAraFJyRkNqV0pMelV2UHpFdUZ1VDhuTVNrMUIrWnVvSy9CL3RFcktNck1LNEdGRWxDMFdLOGt2eVFScG80ck9UOEhKZ0wyRzhNL0FDSCtrb2Y5QVFBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["MonthlyCharges"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"29.85"},{"1":"56.95"},{"1":"NA"},{"1":"42.30"},{"1":"70.70"},{"1":"NaN"},{"1":"89.10"},{"1":"NA"},{"1":"104.80"},{"1":"54.10"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>There are three missing values. One of them is NaN and the others a blank. Using is.na, lets find outh ow R recognizes these values.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb29raW5nIGF0IE1vbnRobHlDaGFyZ2VzXG5kZiRNb250aGx5Q2hhcmdlc1xuYGBgIn0= -->
+<pre class="r"><code># looking at MonthlyCharges
+df$MonthlyCharges</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMjkuODUgIDU2Ljk1ICAgICBOQSAgNDIuMzAgIDcwLjcwICAgIE5hTlxuIFs3XSAgODkuMTAgICAgIE5BIDEwNC44MCAgNTQuMTBcbiJ9 -->
+<pre><code> [1]  29.85  56.95     NA  42.30  70.70    NaN
+ [7]  89.10     NA 104.80  54.10</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaXMubmEoZGYkTW9udGhseUNoYXJnZXMpXG5gYGAifQ== -->
+<pre class="r"><code>is.na(df$MonthlyCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRVxuIFs4XSAgVFJVRSBGQUxTRSBGQUxTRVxuIn0= -->
+<pre><code> [1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
+ [8]  TRUE FALSE FALSE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Judging by the results all missing values are recognized as missing values</p>
+</blockquote>
+<blockquote>
+<p>Using distinct, we can see how many and which distinct values there are in the column</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb29raW5nIGF0IHRoZSBkaXN0aW5jdCB2YWx1ZXNcbmRmICU+JVxuICBkaXN0aW5jdChNb250aGx5Q2hhcmdlcylcbmBgYCJ9 -->
+<pre class="r"><code># looking at the distinct values
+df %&gt;%
+  distinct(MonthlyCharges)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoxLCJucm93Ijo5fSwicmRmIjoiSDRzSUFBQUFBQUFBQmd0eWlURG1pdUJpWUdCZ1ptQm1BMkpXSUpPQnpUbkEwTWpVaUlHQmhRbklZMlJnWWVBRTBSVkFWY0pnQVFZR1BpRG1kTEM5T1JNSVpqbjRWSUxwK2c4ZzNleUxIRnpWMGtEQUlYRE5HU0E0Vy8rREFRd2N3dHdnNGxIR1lPRGd6UU9XUjdPSU5Ua25zYmdZeUJCQUV1UktTU3hKMUVzclNzeE5SVlBPV1pSZnJwY0hGQWRwNFFWaXBnWWc4Zi8vLysvbzVzSVVJWnZMNTV1ZlY1S1JVK21ja1ZpVURwYjloNmFOUGIrZ0pETS9EeWpGQlBJOUs1b0JqRVZvQXZ5bGVTQ0xVblNUTTByenNuV05RWTZIaGhvRDFJVWdOaWNTbXhGaUpjdC9xRkdzVUtQWVV2UFNNL05TWWU3UFNVeEt6WUc1RytocnNILzBDb295ODBwZ29RUVVMZFlyeVM5SmhLbmpTczdQZ1ltQS9jYndEd0JSL2VQNjlRRUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["MonthlyCharges"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"29.85"},{"1":"56.95"},{"1":"NA"},{"1":"42.30"},{"1":"70.70"},{"1":"NaN"},{"1":"89.10"},{"1":"104.80"},{"1":"54.10"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[9]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>NA only shows up once because there are two values and we wanted all unique values</p>
+</blockquote>
+<blockquote>
+<p>To get a count we can use summarise.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudGluZyB1bmlxdWUgdmFsdWVzXG5kZiAlPiVcbiAgc3VtbWFyaXNlKG4gPSBuX2Rpc3RpbmN0KE1vbnRobHlDaGFyZ2VzKSlcbmBgYCJ9 -->
+<pre class="r"><code># counting unique values
+df %&gt;%
+  summarise(n = n_distinct(MonthlyCharges))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJzVlRVVS9DTUJBK0dBTlpCRW40SFN3Ujlka0hlUEdCaEJnZmVDTmxLMnlodEV2YlJYbnpKL3NMd0N0ck4xazBHbVBpa3UzYTIzZmZYWHZmUFU0WE44RWlBQUFQdkRhK1BpNmhQWmxmaisvR0FLMG03aHJRZ3E2eEw0Z2FuaHdBUFd1N05aRFB5WTRxWEF3K1J2STZLbUpFMVZGQlREUUoxeElKYXZDdUZNK2hJemFabTYvNE9lSlRBN1pVUmlOYnBZY3dZMzI3aHdMckhXM2FwbzBaUm9JeEdta2hsMUZDSklrMGxTNXYrUXMzaDI5NEJoVlBMUElWbzc4aCthdGkvb0hIeERkZHZPOTZHdVZLaXgyVkQxUHI2YzhFMXduYlQ1QnVndzB0dkpkUFFoTjI3dXZOeVg1SHVaNVJuWWpZS1dlUzVKTC9vUEtycXZKTlRwWDZvbXJvRy9uY3Z3RlVYT1VwUENjckRISUVuWml1U2M1MHFiaHRtdFZLY0dxOHdMQmxvY2hUcWtOTnJSMlI2VlJ3VlFuMWZHcGt6WEdWY3pNRThTaEtjcjRkM1pyN2hXSU1BYXFSYkp5dlArMUxtL0pOeXAxRWZVWldsTGtHNGJDZFppM01aTXJkT1FQMHFsQ2JMcFd0eFV1eEhudStkOGZUVnFkT0JBQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"9"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>This returns a tibble with a column that we named “n” for the count of distinct values</p>
+</blockquote>
+<blockquote>
+<p>A similar function may be used to count the total number of NA values using summarise and is.na</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudGluZyBtaXNzaW5nIHZhbHVlc1xuZGYgJT4lXG4gIHN1bW1hcmlzZShjb3VudCA9IHN1bShpcy5uYShNb250aGx5Q2hhcmdlcykpKVxuYGBgIn0= -->
+<pre class="r"><code># counting missing values
+df %&gt;%
+  summarise(count = sum(is.na(MonthlyCharges)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJzVlRUV3ZDUUJBZEU2TTExQS93ZHpSUWkrY2U5TktESUtVSGI3SnVWaE5jZDhOKzBIcnJUKzR2MEU1TTF0VFEwbElLRFNTeit6THpabmJuemVOMGNSY3VRZ0R3d1cvaEcrQVNXcFA1N1dnOEFtaDZ1R3RBRXpxNWZVR3Y0UWtBNkpiV3J6a0ZndXlZeHNYZ0kwaWxGYWJ1U1RuUmRjOHdKb1pFYTRVa05mZU9rcytSSTgremU2LzRPZUpUYzJ6cWpOR3lVcXpPeTIxUTdxSHc5WTlsV3ErTUdWTEpPYU5HcWlWTmlDTFVNT1h5bm4vaDV2QU56NkRpaWFWZGNmWWJrcjhxNWg5NDhualB4UWV1cDlScUkzZE1QVXhMcERlVHdpUjhQMEc2RFRhMFFLK2ZwQ0g4RXV2T3lYN0hoSmt4azhqWUtXZVNXQ1YrVUhtL3FueGptZFpmVkEyOVhENzNid0FWMS9rVXZwTVZCam1DZHN6V3hISnpWdHcyeldvbE9EVmVZZGl5VU9RcDFhR20xcmJNVENxRnJvUjZFZDVRTmFCdlJUNEU4UTFOck5qZWpQUDdoV0lVQWFxeGJGeXVQKzFMaTRsTktweEVBMDVXakxzRzRiQ2RaaTNLVkNyY09VTkVkV1R5THAxYmk1ZFNJdVg1M2dGZ0RLdlJVZ1FBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["count"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Both of the previous actions can be grouped up into one function and we can also calculate the median charges, as well.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudGluZyB1bmlxdWUsIG1pc3NpbmcsIGFuZCBtZWRpYW4gdmFsdWVzXG5kZiAlPiUgc3VtbWFyaXNlKG4gPSBuX2Rpc3RpbmN0KE1vbnRobHlDaGFyZ2VzKSxcbiAgICAgICAgICAgICAgICAgbmEgPSBzdW0oaXMubmEoTW9udGhseUNoYXJnZXMpKSxcbiAgICAgICAgICAgICAgICAgbWVkID0gbWVkaWFuKE1vbnRobHlDaGFyZ2VzLCBuYS5ybSA9IFRSVUUpKVxuYGBgIn0= -->
+<pre class="r"><code># counting unique, missing, and median values
+df %&gt;% summarise(n = n_distinct(MonthlyCharges),
+                 na = sum(is.na(MonthlyCharges)),
+                 med = median(MonthlyCharges, na.rm = TRUE))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MywibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJzVlRYMnZDTUJBL3E5Vlo1aC93YzFpWVkzdmRRRjhHRTJUc3dUZUpiYlJpbXBRMFpmTnRYMlA3bFBzRXVrdWJXQ3diRzJPd1FKdkw1ZTUzZDduZlBVem1sOTdjQTRBNjFKdjR1U2hDY3p5N0dGMk5BQm9Pbm1yUWdMYmVuOUZxa0pzQ2RQSUx5QytzclBWZExkL2U3MTV4dlZVQVhFNWltcUxRejQwTktqZUN3NG1SNmpFTnE2NEJJNmwxdFVvdkpJcjRLNG1vRmZPMkZFKytqYWJUYzE3d2Q4QlZNV3lrQ1EzS3NoeTl1K1lNaFczOVlNSTZ4bWNRQ01ab29JUmNCQkdSSkZCVTJyakhLenpzdjhIcGx6aWh5SmFNL2dia3I1TDVCeHp0NzFoLzEvWTB5RklsWWlydkprYlRuUXF1SXJZYkk5d2FHMXBvengrRkl1eFUxNW1SWFV5NW1sSVZpZEF5Wnh4bGt2OGc4MTZaK1RxamFmcEYxZ1hEYjk0QlNxeGpGWmJVRFhTeUFLMlFya2pHMUpGeDIwMVNTY0d5OFF6ZEZnVWo4MUQ3Q2x0YklsRWJ3ZE9TcUNmdU5WbFI5REt1aHlBY0JsSEd0OE5yL2I1UXpDcEFPYmMxT0puaFQvdlNwSHk5NFphaUxpTkx5bXlEY05qeVdmTVR1ZUcyVGcrMXFhOTBsNDZ0eFVjeEdsUGZCMkpZcTZGL0JBQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]},{"label":["na"],"name":[2],"type":["int"],"align":["right"]},{"label":["med"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"9","2":"3","3":"56.95"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Now that the missing values have been identified they can be replaced with the median value of MonthlyCharges by using the mutate function.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtdXRhdGUgbWlzc2luZyB2YWx1ZXNcbmRmICU+JVxuICBtdXRhdGUoTW9udGhseUNoYXJnZXNcbiAgICAgICAgID0gcmVwbGFjZShNb250aGx5Q2hhcmdlcyxcbiAgICAgICAgICAgICAgICAgICBpcy5uYShNb250aGx5Q2hhcmdlcyksXG4gICAgICAgICAgICAgICAgICAgbWVkaWFuKE1vbnRobHlDaGFyZ2VzLCBuYS5ybSA9IFRSVUUpKSlcbmBgYCJ9 -->
+<pre class="r"><code># mutate missing values
+df %&gt;%
+  mutate(MonthlyCharges
+         = replace(MonthlyCharges,
+                   is.na(MonthlyCharges),
+                   median(MonthlyCharges, na.rm = TRUE)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjo1LCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvV1R6WExUTUJESGpkT2tFOU9VenZBQ09YR1Q4WmRpKzlDWnRFN2FCcE02Z1JJS04yRXJ0U2VPM0ZHVWdkeDREWGdHSGdVZWdCZmgyQ0lubG1sY0NqdmphUGVuLzBxN0cvdFY3OUpVTGhWSmttcFNyY0dmT25lbGhqZlNEV2hJMG83TW8wZlNqdFRNMTA5YzlaUTd1ZWFBUDBxeG9kalExY0RrYk5JL0ZRUkNHNExUODBtdkw0alo2VGhnUEhwMzdKZFp0Z3VCZHhKNGJ3VnhEZE1HWitQQnhadVNtQnJYOUY3N25pQzZCUTNnRDRKSmVVN0gxazBRK01HdzFOaU9hNEJSRVBnalFSd0w2dURvUlREMGViU2ZrKzdoenkvY3ZuWmZycmJYL3JOcGJ0M3h0Ky9jZnBSOGNyTGhJbjV2cnEzcjc2MTFsWm5VZGMxVjNTS1FDU3E4aHE0NXFnNkxhRmQzTEUyMUlYZWJ0OXhFcm1Ob0tpd3pYTXRWclNLcW5UOC9Fc21tWm5WVXJkU1owRkpkV0Nuam9KL2lrTkdNSkdFN2pIRTRLL2plRUNVcGpyYVlERURodFk0Um1iVVpSV1F4eGZRL1IvMUplK3hSSENXc0hTSWFWVnA2S1BrKzM2Ni90c0tMZjdveXllNTVmOTErTUdmN0phOFROT2ZDVFJWMThmcUV5d1hMNXBnT2VnWFpIMmFFeGVuS2l4RzlLZy9ldThnWVNyZFphNFJXYzB6WUVMTTRpOFF0WHJ5a3BIcDFtS0tGdUZwQUpVSU1xVlBLcTZySW16VDdxSXBxVzNrem4va1BIL2t2dnR4VXhMdlpOVXN5d3FYeTNTKzQvTFJwQlR4Wmt2em9DSVR4a3N5QXZmNUw4dTJOdFFwZnVlUFhOMWZLdDVYaE5UQzVTZ2dXVGFib0EwN0ZGSGtMNnc3VWE1b1FKbHJtZEtHeWZKVGwvTE5Va0hWdjBzMXZQeWZEV2JrRUFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["customerID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["MonthlyCharges"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TotalCharges"],"name":[3],"type":["chr"],"align":["left"]},{"label":["PaymentMethod"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Churn"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"7590-VHVEG","2":"29.85","3":"109.9","4":"Electronic check","5":"yes"},{"1":"5575-GNVDE","2":"56.95","3":"na","4":"Mailed check","5":"yes"},{"1":"3668-QPYBK","2":"56.95","3":"108.15","4":"--","5":"yes"},{"1":"7795-CFOCW","2":"42.30","3":"1840.75","4":"Bank transfer","5":"no"},{"1":"9237-HQITU","2":"70.70","3":"NA","4":"Electronic check","5":"no"},{"1":"9305-CDSKC","2":"56.95","3":"820.5","4":"--","5":"yes"},{"1":"1452-KIOVK","2":"89.10","3":"1949.4","4":"Credit card","5":"no"},{"1":"6713-OKOMC","2":"56.95","3":"N/A","4":"NA","5":"yes"},{"1":"7892-POOKP","2":"104.80","3":"3046.05","4":"Electronic check","5":"no"},{"1":"8451-AJOMK","2":"54.10","3":"354.95","4":"Electronic check","5":"no"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Double check that this was applied to the entire tibble.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGZcbmBgYCJ9 -->
+<pre class="r"><code>df</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjo1LCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvVlR6WExUTUJBMlRwTk1URkk2d3d2a3hFM0dmNHJ0QXpOdW5iUU5KblVDSlJSdXduWnFUeHk1NHlnRE9aWFhnQ05uSGdVZWdMZmd4SEJxa1IzTE5DNkZuWkgxN2FkdnBkMjE5THgvcGdwbkFzZHhOYTdXb0tOT0lkZXd4N0lDRlk3YjRhbDNqOXZoV3RuOG5xb2VVcEJwOXVnUWlnVkJoNllFcHNmVHdSRmpJTlFoT0RxWjlnZU1VWHM5QTB6R3J3K2NNa28zSWJBUFhmc1ZZMHhGMWNIeFpIajZzbVJVaVdyNkx4eWJNYklHRmVBTTNXbTVUMCtYVmVBNjdxalU2SWFwZ0xIck9tUEdHQnFVd2Y1VGQrUlFiemRqckNmZlAxTDdaRDFiNS9QbGo2enk1bWRyOEdpV21UWDU4cFhhdDh0ZlhHN1c5RERuUzkwYk5UZkxhZWU2U2svcXNtU0tadUh3R0JXb0lVdUdLTVBDYThxR0pvazZwTEIxVFkzRkdvb2t3akxDMUV4Uks3emF5ZU45RnF4S1drK1VTcDBLTmRHRWxUVDJCbkhna1RUQmtkZjF3c0NiRjN4N2hLSTQ4TGM0SG9BQ2RRNFFubmRKaXZCeUZxVC8yZXBQMkgwN0RmeUlkRDJVK3BXUzdncSt6Vy9uWDFzSHkzOUNIaWUzMEYrWDc0elp2dVIxakJaVXVNbWl6cTZQdDFxU1pCR2t3MzdCN0k0U1RNSjRiWWNvUFM4M2JwOG1CTVhiWEdlTTFvc0FrMUZBd3NSbnA5amhLc1hWbzcwWUxkblJqQlI4UkpBNFMybFdGWGtyVGQ2SkxOdE9Wc3dIK3FFdC8wbW5xNHE0bVZ5UUtNRlV5dDk4d2VYVFRpdkVneFhPdHZhQkY2N3dIQmo1TDhtV045WXBzSEFEMXpkSDh0ZVY1alVDZkI3aGdCVVpvN2RCekxwSVM4Z3JFQy9TQ0JOV01tV1hJc2xhV2ZZL2lSbVQxOFpkL1FhL0c3T3l1UVFBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["customerID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["MonthlyCharges"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TotalCharges"],"name":[3],"type":["chr"],"align":["left"]},{"label":["PaymentMethod"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Churn"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"7590-VHVEG","2":"29.85","3":"109.9","4":"Electronic check","5":"yes"},{"1":"5575-GNVDE","2":"56.95","3":"na","4":"Mailed check","5":"yes"},{"1":"3668-QPYBK","2":"NA","3":"108.15","4":"--","5":"yes"},{"1":"7795-CFOCW","2":"42.30","3":"1840.75","4":"Bank transfer","5":"no"},{"1":"9237-HQITU","2":"70.70","3":"NA","4":"Electronic check","5":"no"},{"1":"9305-CDSKC","2":"NaN","3":"820.5","4":"--","5":"yes"},{"1":"1452-KIOVK","2":"89.10","3":"1949.4","4":"Credit card","5":"no"},{"1":"6713-OKOMC","2":"NA","3":"N/A","4":"NA","5":"yes"},{"1":"7892-POOKP","2":"104.80","3":"3046.05","4":"Electronic check","5":"no"},{"1":"8451-AJOMK","2":"54.10","3":"354.95","4":"Electronic check","5":"no"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>It didn’t change. That’s because the mutation was not assigned to the original dataframe. The below code will fix this.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtdXRhdGUgbWlzc2luZyB2YWx1ZXMgYW5kIG1vZGlmeSB0aGUgb3JpZ2luYWwgZGF0YWZyYW1lXG5kZiA8LSBkZiAlPiVcbiAgbXV0YXRlKE1vbnRobHlDaGFyZ2VzID0gcmVwbGFjZShNb250aGx5Q2hhcmdlcyxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShNb250aGx5Q2hhcmdlcyksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWVkaWFuKE1vbnRobHlDaGFyZ2VzLCBuYS5ybT1UUlVFKSkpXG5gYGAifQ== -->
+<pre class="r"><code># mutate missing values and modify the original dataframe
+df &lt;- df %&gt;%
+  mutate(MonthlyCharges = replace(MonthlyCharges,
+                                  is.na(MonthlyCharges),
+                                  median(MonthlyCharges, na.rm=TRUE)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Now double check again to make sure this process worked.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGZcbmBgYCJ9 -->
+<pre class="r"><code>df</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjo1LCJucm93IjoxMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvVlRUWExUTUJRMlRwTk9UTkxKREJmSWlwMk0veFRiQzJiU09ta2JUT29VU2lqc2hLM1Vuamh5UjFFR3N1TWFjQWFPQWdmZ0lpeGI1TVF5alV2aHpkajYzcWZ2U2U4OVNhOEdsNlp5cVVpU1ZKTnFEZjdWT1pRYTNrUTNvQ0ZKZXpMM0hrbDdVak1mUDNIVkV3NXlUWWQvU2pHaDJORFZ3UFIwT2p3UkRJUTJCQ2RuMDhGUU1HYXY1NER6eWJzanY0eXlYUWk4NDhCN0t4alhNRzF3ZWo2NmVGTXlwc1kxZzllK0p4amRnZ2J3UjhHMFhLZG42eVlJL0dCY2FtekhOY0FrQ1B5SllCd0w2dUR3UlREMnVYZVFNLzNuUDc5dys5cC91ZDRkaDA5bnVmWFB2MzNuOXFQa3A4ZGJYdmp2elkzMS9kWkdWK2xKWGRkYzFTMGNtYUFDTlhUTlVYVlllUHU2WTJtcURUbHMzbklUc1k2aHFiQ01jQzFYdFFxdmR2YnNVQVNibXRWVHRWSm5Ra3QxWVNXTnpqREZJYU1aU2NKdUdPTndYdkN0TVVwU0hPMXdNZ0FGYWg4aE11OHlpc2h5aHVsL2x2b1Q5dGlqT0VwWU4wUTBxcFQwVVBCOWZqZi8yaG92L3dsbGt0MURmNTErTUdiM2t0Y0pXbkRoTm91NnVEN2hhc215QmFhalFjRWNqRFBDNG5UdHhZaGVsUXUzTGpLRzBsMnVQVUhyQlNac2pGbWNSV0lYTDE1UlV0MDZUTkZTYkMxSUpVSU1xVFBLczZySW16VDdxSXBzMjNreG4vbVB0L3dYSDI0cTR2M3NtaVVaNFZMNTdnc3VuemF0RUowVnlaZU9RQml2eUJ6bzJ1Wk04dm10dFF1czNNSDE3Wjd5YmFWN0RVeXVFb0pGbFNuNmdGUFJSbDdEcGdUMW1pYUVpWm81dTFSWjNzdnlBTEpVTUp2aXBKdmZQSGJVZUxvRUFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["customerID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["MonthlyCharges"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TotalCharges"],"name":[3],"type":["chr"],"align":["left"]},{"label":["PaymentMethod"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Churn"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"7590-VHVEG","2":"29.85","3":"109.9","4":"Electronic check","5":"yes"},{"1":"5575-GNVDE","2":"56.95","3":"na","4":"Mailed check","5":"yes"},{"1":"3668-QPYBK","2":"56.95","3":"108.15","4":"--","5":"yes"},{"1":"7795-CFOCW","2":"42.30","3":"1840.75","4":"Bank transfer","5":"no"},{"1":"9237-HQITU","2":"70.70","3":"NA","4":"Electronic check","5":"no"},{"1":"9305-CDSKC","2":"56.95","3":"820.5","4":"--","5":"yes"},{"1":"1452-KIOVK","2":"89.10","3":"1949.4","4":"Credit card","5":"no"},{"1":"6713-OKOMC","2":"56.95","3":"N/A","4":"NA","5":"yes"},{"1":"7892-POOKP","2":"104.80","3":"3046.05","4":"Electronic check","5":"no"},{"1":"8451-AJOMK","2":"54.10","3":"354.95","4":"Electronic check","5":"no"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>It worked!</p>
+</blockquote>
+<blockquote>
+<p>Now it’s time to tackle some non-standard missing values</p>
+</blockquote>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsZWFuaW5nIERhdGEgd2l0aCBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KPiBGaXJzdCB0aGUgbGlicmFyeSBhbmQgZGF0YSBuZWVkIHRvIGJlIGxvYWRlZCBpbnRvIFIgTm90ZTogVGhpcyB3YWxrdGhyb3VnaCBpcyBmcm9tDQpodHRwczovL3Rvd2FyZHNkYXRhc2NpZW5jZS5jb20vZGF0YS1jbGVhbmluZy13aXRoLXItYW5kLXRoZS10aWR5dmVyc2UtZGV0ZWN0aW5nLW1pc3NpbmctdmFsdWVzLWVhMjNjNTE5YmM2MiANCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI3NldCB0aGUgd29ya2luZyBkaXJlY3RvcnkNCmZpbGVfbG9jIDwtIHBhc3RlKGdldHdkKCksICIvcmF3X2RhdGEiLCBzZXA9IiIpDQpzZXR3ZChmaWxlX2xvYykNCg0KIyByZWFkIGNzdiBmaWxlDQpkZiA8LSByZWFkX2NzdigidGVsZWNvbS5jc3YiKQ0KYGBgDQoNCj4gVGhlICJnbGltcHNlIiBmdW5jdGlvbiBzaG93cyB0aGUgdmFyaWFibGUgbmFtZXMgYW5kIHR5cGVzLg0KDQpgYGB7cn0NCmdsaW1wc2UoZGYpDQpgYGANCg0KPiBUaGUgImRwbHlyIiBsaWJyYXJ5IGlzIHVzZWQgZm9yIGRhdGEgbWFuaXB1bGF0aW9uLiBUaGUgZmlyc3QgZXhhbXBsZSB3aWxsIGRlbW9uc3RyYXRlIHRoZSB1c2Ugb2YgZmlsdGVyIHRvIHNob3cgYWxsIGN1c3RvbWVycyB3aG8gaGF2ZSBDaHVybiB2YWx1ZXMgZXF1YWwgdG8gInllcyIuDQoNCmBgYHtyfQ0KZGYgJT4lDQogIGZpbHRlcihDaHVybiA9PSAieWVzIikNCmBgYA0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsZWFuaW5nIERhdGEgd2l0aCBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KPiBGaXJzdCB0aGUgbGlicmFyeSBhbmQgZGF0YSBuZWVkIHRvIGJlIGxvYWRlZCBpbnRvIFIgTm90ZTogVGhpcyB3YWxrdGhyb3VnaCBpcyBmcm9tDQpodHRwczovL3Rvd2FyZHNkYXRhc2NpZW5jZS5jb20vZGF0YS1jbGVhbmluZy13aXRoLXItYW5kLXRoZS10aWR5dmVyc2UtZGV0ZWN0aW5nLW1pc3NpbmctdmFsdWVzLWVhMjNjNTE5YmM2MiANCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI3NldCB0aGUgd29ya2luZyBkaXJlY3RvcnkNCmZpbGVfbG9jIDwtIHBhc3RlKGdldHdkKCksICIvcmF3X2RhdGEiLCBzZXA9IiIpDQpzZXR3ZChmaWxlX2xvYykNCg0KIyByZWFkIGNzdiBmaWxlDQpkZiA8LSByZWFkX2NzdigidGVsZWNvbS5jc3YiKQ0KYGBgDQoNCj4gVGhlICJnbGltcHNlIiBmdW5jdGlvbiBzaG93cyB0aGUgdmFyaWFibGUgbmFtZXMgYW5kIHR5cGVzLg0KDQpgYGB7cn0NCmdsaW1wc2UoZGYpDQpgYGANCg0KPiBUaGUgImRwbHlyIiBsaWJyYXJ5IGlzIHVzZWQgZm9yIGRhdGEgbWFuaXB1bGF0aW9uLiBUaGUgZmlyc3QgZXhhbXBsZSB3aWxsIGRlbW9uc3RyYXRlIHRoZSB1c2Ugb2YgZmlsdGVyIHRvIHNob3cgYWxsIGN1c3RvbWVycyB3aG8gaGF2ZSBDaHVybiB2YWx1ZXMgZXF1YWwgdG8gInllcyIuDQoNCmBgYHtyfQ0KZGYgJT4lDQogIGZpbHRlcihDaHVybiA9PSAieWVzIikNCmBgYA0KDQo+IEZpbHRlciBhbmQgc2VsZWN0IGNhbiBiZSB1c2VkIHRvZ2V0aGVyIHRvIGZpbHRlciBvdXQgdGhvc2Ugd2hvIGhhdmUgY2h1cm5lZCBhbmQgb25seSBzZWxlY3QgdGhlIGN1c3RvbWVySUQgYW5kIHRoZSBUb3RhbENoYXJnZXMuIFRoaXMgaXMgYWxzbyBjb21wbGV0ZWQgYnkgcGlwaW5nIHRoZSBjb21tYW5kcyBhbmQgdGhlIGRwbHlyIHBhY2thZ2UuDQoNCmBgYHtyfQ0KIyBmaWx0ZXIgb24gY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCwNCiMgc2VsZWN0IGN1c3RvbWVySUQgYW5kIFRvdGFsQ2hhcmdlcyBjb2x1bW5zDQpkZiAlPiUNCiAgZmlsdGVyKENodXJuPT0ieWVzIikgJT4lDQogIHNlbGVjdChjdXN0b21lcklELCBUb3RhbENoYXJnZXMpDQpgYGANCg0KPiBOb3cgdGhlIG1pc3NpbmcgdmFsdWVzIGNhbiBiZSB0YWNrbGVkLiBJJ2xsIGxvb2sgYXQgdGhlIG1vbnRobHkgY2hhcmdlcyBjb2x1bW4gYnkgdXNpbmcgdGhlIHNhbWUgc2VsZWN0IG1ldGhvZC4NCg0KYGBge3J9DQojIHNlbGVjdCBNb250aGx5Q2hhcmdlcyBDb2x1bW4NCmRmICU+JQ0KICBzZWxlY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBUaGVyZSBhcmUgdGhyZWUgbWlzc2luZyB2YWx1ZXMuIE9uZSBvZiB0aGVtIGlzIE5hTiBhbmQgdGhlIG90aGVycyBhIGJsYW5rLiBVc2luZyBpcy5uYSwgbGV0cyBmaW5kIG91dGggb3cgUiByZWNvZ25pemVzIHRoZXNlIHZhbHVlcy4NCg0KYGBge3J9DQojIGxvb2tpbmcgYXQgTW9udGhseUNoYXJnZXMNCmRmJE1vbnRobHlDaGFyZ2VzDQppcy5uYShkZiRNb250aGx5Q2hhcmdlcykNCmBgYA0KDQo+IEp1ZGdpbmcgYnkgdGhlIHJlc3VsdHMgYWxsIG1pc3NpbmcgdmFsdWVzIGFyZSByZWNvZ25pemVkIGFzIG1pc3NpbmcgdmFsdWVzDQoNCj4gVXNpbmcgZGlzdGluY3QsIHdlIGNhbiBzZWUgaG93IG1hbnkgYW5kIHdoaWNoIGRpc3RpbmN0IHZhbHVlcyB0aGVyZSBhcmUgaW4gdGhlIGNvbHVtbg0KDQpgYGB7cn0NCiMgbG9va2luZyBhdCB0aGUgZGlzdGluY3QgdmFsdWVzDQpkZiAlPiUNCiAgZGlzdGluY3QoTW9udGhseUNoYXJnZXMpDQpgYGANCg0KPiBOQSBvbmx5IHNob3dzIHVwIG9uY2UgYmVjYXVzZSB0aGVyZSBhcmUgdHdvIHZhbHVlcyBhbmQgd2Ugd2FudGVkIGFsbCB1bmlxdWUgdmFsdWVzDQoNCj4gVG8gZ2V0IGEgY291bnQgd2UgY2FuIHVzZSBzdW1tYXJpc2UuDQoNCmBgYHtyfQ0KIyBjb3VudGluZyB1bmlxdWUgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKG4gPSBuX2Rpc3RpbmN0KE1vbnRobHlDaGFyZ2VzKSkNCmBgYA0KDQo+IFRoaXMgcmV0dXJucyBhIHRpYmJsZSB3aXRoIGEgY29sdW1uIHRoYXQgd2UgbmFtZWQgIm4iIGZvciB0aGUgY291bnQgb2YgZGlzdGluY3QgdmFsdWVzDQoNCj4gQSBzaW1pbGFyIGZ1bmN0aW9uIG1heSBiZSB1c2VkIHRvIGNvdW50IHRoZSB0b3RhbCBudW1iZXIgb2YgTkEgdmFsdWVzIHVzaW5nIHN1bW1hcmlzZSBhbmQgaXMubmENCg0KYGBge3J9DQojIGNvdW50aW5nIG1pc3NpbmcgdmFsdWVzDQpkZiAlPiUNCiAgc3VtbWFyaXNlKGNvdW50ID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSkpDQpgYGANCg0KPiBCb3RoIG9mIHRoZSBwcmV2aW91cyBhY3Rpb25zIGNhbiBiZSBncm91cGVkIHVwIGludG8gb25lIGZ1bmN0aW9uIGFuZCB3ZSBjYW4gYWxzbyBjYWxjdWxhdGUgdGhlIG1lZGlhbiBjaGFyZ2VzLCBhcyB3ZWxsLg0KDQpgYGB7cn0NCiMgY291bnRpbmcgdW5pcXVlLCBtaXNzaW5nLCBhbmQgbWVkaWFuIHZhbHVlcw0KZGYgJT4lIHN1bW1hcmlzZShuID0gbl9kaXN0aW5jdChNb250aGx5Q2hhcmdlcyksDQogICAgICAgICAgICAgICAgIG5hID0gc3VtKGlzLm5hKE1vbnRobHlDaGFyZ2VzKSksDQogICAgICAgICAgICAgICAgIG1lZCA9IG1lZGlhbihNb250aGx5Q2hhcmdlcywgbmEucm0gPSBUUlVFKSkNCmBgYA0KDQo+IE5vdyB0aGF0IHRoZSBtaXNzaW5nIHZhbHVlcyBoYXZlIGJlZW4gaWRlbnRpZmllZCB0aGV5IGNhbiBiZSByZXBsYWNlZCB3aXRoIHRoZSBtZWRpYW4gdmFsdWUgb2YgTW9udGhseUNoYXJnZXMgYnkgdXNpbmcgdGhlIG11dGF0ZSBmdW5jdGlvbi4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcw0KZGYgJT4lDQogIG11dGF0ZShNb250aGx5Q2hhcmdlcw0KICAgICAgICAgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtID0gVFJVRSkpKQ0KYGBgDQoNCj4gRG91YmxlIGNoZWNrIHRoYXQgdGhpcyB3YXMgYXBwbGllZCB0byB0aGUgZW50aXJlIHRpYmJsZS4NCg0KYGBge3J9DQpkZg0KYGBgDQoNCj4gSXQgZGlkbid0IGNoYW5nZS4gVGhhdCdzIGJlY2F1c2UgdGhlIG11dGF0aW9uIHdhcyBub3QgYXNzaWduZWQgdG8gdGhlIG9yaWdpbmFsIGRhdGFmcmFtZS4gVGhlIGJlbG93IGNvZGUgd2lsbCBmaXggdGhpcy4NCg0KYGBge3J9DQojIG11dGF0ZSBtaXNzaW5nIHZhbHVlcyBhbmQgbW9kaWZ5IHRoZSBvcmlnaW5hbCBkYXRhZnJhbWUNCmRmIDwtIGRmICU+JQ0KICBtdXRhdGUoTW9udGhseUNoYXJnZXMgPSByZXBsYWNlKE1vbnRobHlDaGFyZ2VzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKE1vbnRobHlDaGFyZ2VzKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4oTW9udGhseUNoYXJnZXMsIG5hLnJtPVRSVUUpKSkNCmBgYA0KDQo+IE5vdyBkb3VibGUgY2hlY2sgYWdhaW4gdG8gbWFrZSBzdXJlIHRoaXMgcHJvY2VzcyB3b3JrZWQuDQoNCmBgYHtyfQ0KZGYNCmBgYA0KDQo+IEl0IHdvcmtlZCENCg0KPiBOb3cgaXQncyB0aW1lIHRvIHRhY2tsZSBzb21lIG5vbi1zdGFuZGFyZCBtaXNzaW5nIHZhbHVlcw0KDQoNCg==</div>
 
 
 

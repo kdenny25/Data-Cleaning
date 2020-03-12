@@ -30,4 +30,106 @@ df %>%
   filter(Churn == "yes")
 ```
 
+> Filter and select can be used together to filter out those who have churned and only select the customerID and the TotalCharges. This is also completed by piping the commands and the dplyr package.
+
+```{r}
+# filter on customers that churned,
+# select customerID and TotalCharges columns
+df %>%
+  filter(Churn=="yes") %>%
+  select(customerID, TotalCharges)
+```
+
+> Now the missing values can be tackled. I'll look at the monthly charges column by using the same select method.
+
+```{r}
+# select MonthlyCharges Column
+df %>%
+  select(MonthlyCharges)
+```
+
+> There are three missing values. One of them is NaN and the others a blank. Using is.na, lets find outh ow R recognizes these values.
+
+```{r}
+# looking at MonthlyCharges
+df$MonthlyCharges
+is.na(df$MonthlyCharges)
+```
+
+> Judging by the results all missing values are recognized as missing values
+
+> Using distinct, we can see how many and which distinct values there are in the column
+
+```{r}
+# looking at the distinct values
+df %>%
+  distinct(MonthlyCharges)
+```
+
+> NA only shows up once because there are two values and we wanted all unique values
+
+> To get a count we can use summarise.
+
+```{r}
+# counting unique values
+df %>%
+  summarise(n = n_distinct(MonthlyCharges))
+```
+
+> This returns a tibble with a column that we named "n" for the count of distinct values
+
+> A similar function may be used to count the total number of NA values using summarise and is.na
+
+```{r}
+# counting missing values
+df %>%
+  summarise(count = sum(is.na(MonthlyCharges)))
+```
+
+> Both of the previous actions can be grouped up into one function and we can also calculate the median charges, as well.
+
+```{r}
+# counting unique, missing, and median values
+df %>% summarise(n = n_distinct(MonthlyCharges),
+                 na = sum(is.na(MonthlyCharges)),
+                 med = median(MonthlyCharges, na.rm = TRUE))
+```
+
+> Now that the missing values have been identified they can be replaced with the median value of MonthlyCharges by using the mutate function.
+
+```{r}
+# mutate missing values
+df %>%
+  mutate(MonthlyCharges
+         = replace(MonthlyCharges,
+                   is.na(MonthlyCharges),
+                   median(MonthlyCharges, na.rm = TRUE)))
+```
+
+> Double check that this was applied to the entire tibble.
+
+```{r}
+df
+```
+
+> It didn't change. That's because the mutation was not assigned to the original dataframe. The below code will fix this.
+
+```{r}
+# mutate missing values and modify the original dataframe
+df <- df %>%
+  mutate(MonthlyCharges = replace(MonthlyCharges,
+                                  is.na(MonthlyCharges),
+                                  median(MonthlyCharges, na.rm=TRUE)))
+```
+
+> Now double check again to make sure this process worked.
+
+```{r}
+df
+```
+
+> It worked!
+
+> Now it's time to tackle some non-standard missing values
+
 
