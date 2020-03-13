@@ -30,4 +30,222 @@ df %>%
   filter(Churn == "yes")
 ```
 
+> Filter and select can be used together to filter out those who have churned and only select the customerID and the TotalCharges. This is also completed by piping the commands and the dplyr package.
+
+```{r}
+# filter on customers that churned,
+# select customerID and TotalCharges columns
+df %>%
+  filter(Churn=="yes") %>%
+  select(customerID, TotalCharges)
+```
+
+> Now the missing values can be tackled. I'll look at the monthly charges column by using the same select method.
+
+```{r}
+# select MonthlyCharges Column
+df %>%
+  select(MonthlyCharges)
+```
+
+> There are three missing values. One of them is NaN and the others a blank. Using is.na, lets find outh ow R recognizes these values.
+
+```{r}
+# looking at MonthlyCharges
+df$MonthlyCharges
+is.na(df$MonthlyCharges)
+```
+
+> Judging by the results all missing values are recognized as missing values
+
+> Using distinct, we can see how many and which distinct values there are in the column
+
+```{r}
+# looking at the distinct values
+df %>%
+  distinct(MonthlyCharges)
+```
+
+> NA only shows up once because there are two values and we wanted all unique values
+
+> To get a count we can use summarise.
+
+```{r}
+# counting unique values
+df %>%
+  summarise(n = n_distinct(MonthlyCharges))
+```
+
+> This returns a tibble with a column that we named "n" for the count of distinct values
+
+> A similar function may be used to count the total number of NA values using summarise and is.na
+
+```{r}
+# counting missing values
+df %>%
+  summarise(count = sum(is.na(MonthlyCharges)))
+```
+
+> Both of the previous actions can be grouped up into one function and we can also calculate the median charges, as well.
+
+```{r}
+# counting unique, missing, and median values
+df %>% summarise(n = n_distinct(MonthlyCharges),
+                 na = sum(is.na(MonthlyCharges)),
+                 med = median(MonthlyCharges, na.rm = TRUE))
+```
+
+> Now that the missing values have been identified they can be replaced with the median value of MonthlyCharges by using the mutate function.
+
+```{r}
+# mutate missing values
+df %>%
+  mutate(MonthlyCharges
+         = replace(MonthlyCharges,
+                   is.na(MonthlyCharges),
+                   median(MonthlyCharges, na.rm = TRUE)))
+```
+
+> Double check that this was applied to the entire tibble.
+
+```{r}
+df
+```
+
+> It didn't change. That's because the mutation was not assigned to the original dataframe. The below code will fix this.
+
+```{r}
+# mutate missing values and modify the original dataframe
+df <- df %>%
+  mutate(MonthlyCharges = replace(MonthlyCharges,
+                                  is.na(MonthlyCharges),
+                                  median(MonthlyCharges, na.rm=TRUE)))
+```
+
+> Now double check again to make sure this process worked.
+
+```{r}
+df
+```
+
+> It worked!
+
+> Now it's time to tackle some non-standard missing values
+
+> To start, take a look at the TotalCharges column
+
+```{r}
+# look at the TOtalCharges column
+df %>%
+  select(TotalCharges)
+```
+
+> At a glance there are various forms of the NA value. The next step is to see if R can properly interpret these values as NA using the is.na function.
+
+```{r}
+# looking at missing values
+df$TotalCharges
+is.na(df$TotalCharges)
+```
+
+> Ok, so looking at the results there are three na values and one TRUE value. I looks lke the only value of NA that R recognizes is NA.
+
+> Next, we summarise the data to see how many missing values R found.
+
+```{r}
+# counting missing values
+df %>%
+  summarise(count = sum(is.na(TotalCharges)))
+```
+
+> As expected from the previous test. R recognises only one missing value.
+
+> The next step is to use the mutate function to change the other missing values to the correct format.
+
+```{r}
+# replacig with standard missing value type, NA
+df <- df %>%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == "na", NA)) %>%
+  mutate(TotalCharges = replace(TotalCharges, TotalCharges == "N/A", NA))
+```
+
+> Check the colum again to varify the changes took place.
+
+```{r}
+# take another look
+df$TotalCharges
+is.na(df$TotalCharges)
+```
+
+> Great! The changes were made successfully. There is still an issue with this column. R is interpreting the values as characters rather than a numerical value. To verify use the glimpse function.
+
+```{r}
+# verify column type
+glimpse(df$TotalCharges)
+```
+
+> Confirmed. The values are all being treated as characters. Lets change them to numeric types.
+
+```{r}
+# changing to numeric type
+df$TotalCharges <- as.numeric(df$TotalCharges)
+glimpse(df$TotalCharges)
+```
+
+> Done! Just like the previous column, replace all the missing values with the median value.
+
+```{r}
+# replace missing values with median
+df <- df %>%
+  mutate(TotalCharges = replace(TotalCharges,
+                                is.na(TotalCharges),
+                                median(TotalCharges, na.rm = TRUE)))
+df$TotalCharges
+```
+
+> A shorter method to changing the NA values is to start by changing the column to a numeric type. This will automatically make the NA values uniform. However this isn't always the best method given other anomalies in the data.
+
+> More Missing Values
+
+> This time we will look into the PaymentMethod column
+
+```{r}
+# show PaymentMethod column
+df %>%
+  select(PaymentMethod)
+```
+
+> Like the first two, lets check to see how R interprets these missing values
+
+```{r}
+# looking at PaymentMethod
+df$PaymentMethod
+is.na(df$PaymentMethod)
+```
+
+> Ok, so it does not recognize the -- as missing values.The next step is to mutate these.
+
+```{r}
+# replacing "--" with NA
+df <- df %>%
+  mutate(PaymentMethod = replace(PaymentMethod, PaymentMethod == "--", NA))
+is.na(df$PaymentMethod)
+df$PaymentMethod
+```
+
+> Next we will convert the NA values to "unavailable"
+
+```{r}
+# replace NA with "unavailable"
+df <- df %>%
+  mutate(PaymentMethod = replace(PaymentMethod, is.na(PaymentMethod), "unavailable"))
+
+df$PaymentMethod
+```
+
+
+
+
+
+
 
